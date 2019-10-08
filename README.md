@@ -14,3 +14,4 @@ sudo node index.js | npx bunyan -o short
 -Verify and debug undoAsset (current code totally untested)<br>
 -Proper client side application<br>
 -Additional verifications in validateAsset<br>
+-Ensure true randomness on all forging nodes :) - might be hard one<br>
