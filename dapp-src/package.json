@@ -1,6 +1,6 @@
 {
   "name": "ldice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "cool lisk dice dapp",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "lisk-sdk": "2.3.6",
+    "prando": "^5.1.1",
     "random": "^2.1.1"
   }
 }
