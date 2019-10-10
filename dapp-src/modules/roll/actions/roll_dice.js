@@ -76,7 +76,7 @@ module.exports = ({components, channel, config}, logger) => {
             balance: newBalance,
             asset: betResults
           });
-        logger.info(`Bet id: ${lastTransactions[i].id} profit: ${pureProfit} bet: ${betNumber} rolled: ${rolledNumber}`);
+        logger.info(`Bet id: ${lastTransactions[i].id} profit: ${totalProfit} bet: ${betNumber} rolled: ${rolledNumber}`);
       }
     }
   });
