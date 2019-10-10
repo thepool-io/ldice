@@ -63,7 +63,7 @@ module.exports = ({components, channel, config}, logger) => {
               [lastTransactions[i].id]:
                 {
                   bet_number: betNumber,
-                  profit: pureProfit.toString(),
+                  profit: totalProfit.toString(),
                   rolled_number:
                   rolledNumber
                 }
