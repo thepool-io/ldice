@@ -40,7 +40,7 @@ class BetTransaction extends BaseTransaction {
         const CurrentBalance = BigNum(sender.balance);
         const BetAmount = BigNum(this.amount);
 
-        // update balance
+        //subtract bet amount
         sender.balance = CurrentBalance.sub(BetAmount).toString();
 
         //save
