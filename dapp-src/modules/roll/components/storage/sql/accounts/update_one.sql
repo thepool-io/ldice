@@ -11,6 +11,5 @@
  *
  * Removal or modification of this copyright notice is prohibited.
  */
-
-
+ 
 UPDATE mem_accounts SET ${updateSet:raw} WHERE address = (SELECT address FROM mem_accounts ${parsedFilters:raw} LIMIT 1);

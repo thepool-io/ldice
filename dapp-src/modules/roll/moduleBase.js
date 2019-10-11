@@ -16,12 +16,10 @@
 
 const {createLoggerComponent} = require('lisk-framework/src/components/logger');
 const {createStorageComponent} = require('lisk-framework/src/components/storage');
-const {
-  bootstrapStorage,
-} = require('./init_steps');
-const rollDice = require('./actions/roll_dice');
+const {bootstrapStorage} = require('./init_steps');
+const drawing = require('./drawing.js');
 
-module.exports = class Roll {
+module.exports = class Drawing {
   constructor(channel, options) {
     this.channel = channel;
     this.options = { blockHashDistance: 1, ...options };
@@ -34,7 +32,6 @@ module.exports = class Roll {
 
   async bootstrap() {
     global.constants = this.options.constants;
-
     // Logger
     const loggerConfig = await this.channel.invoke(
       'app:getComponentConfig',
@@ -42,10 +39,9 @@ module.exports = class Roll {
     );
     this.logger = createLoggerComponent({
       ...loggerConfig,
-      module: 'roll',
+      module: 'drawing',
     });
-
-    // Storage
+    //Storage
     this.logger.debug('Initiating storage...');
     const storageConfig = await this.channel.invoke(
       'app:getComponentConfig',
@@ -58,15 +54,13 @@ module.exports = class Roll {
         : createLoggerComponent({
           ...loggerConfig,
           logFileName: storageConfig.logFileName,
-          module: 'roll:database',
+          module: 'drawing:database',
         });
     const storage = createStorageComponent(storageConfig, dbLogger);
-
     const applicationState = await this.channel.invoke(
       'app:getApplicationState',
     );
-
-    // Setup scope
+    //Setup scope
     this.scope = {
       components: {
         logger: this.logger,
@@ -77,8 +71,7 @@ module.exports = class Roll {
       applicationState,
     };
     await bootstrapStorage(this.scope, global.constants.ACTIVE_DELEGATES);
-
-    rollDice(this.scope, this.logger);
+    drawing(this.scope, this.logger);
   }
 
   async cleanup(code, error) {
@@ -91,8 +84,7 @@ module.exports = class Roll {
     } else if (code === undefined || code === null) {
       code = 0;
     }
-    this.logger.info('Cleaning Roll module...');
-
+    this.logger.info('Cleaning Drawing module...');
     try {
       if (components !== undefined) {
         Object.keys(components).forEach(async key => {
@@ -106,5 +98,4 @@ module.exports = class Roll {
     }
     this.logger.info('Cleaned up successfully');
   }
-
 };

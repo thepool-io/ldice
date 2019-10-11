@@ -14,16 +14,13 @@
 
 'use strict';
 
-const {
-  RollAccount,
-} = require('../components/storage/entities');
+const { CustomAccountEntity } = require('../components/storage/entities');
 
 module.exports = async ({components: {storage, logger}}, accountLimit) => {
   try {
-    storage.registerEntity('Account', RollAccount, {
+    storage.registerEntity('Account', CustomAccountEntity, {
       replaceExisting: true,
     });
-
     const status = await storage.bootstrap();
     if (!status) {
       throw new Error('Can not bootstrap the storage component');

@@ -115,7 +115,7 @@
                     },
                     amount: `${lisk.transactions.utils.convertLSKToBeddows(amount)}`,
                     fee: `${lisk.transactions.utils.convertLSKToBeddows('0.1')}`,
-                    recipientId: lisk.cryptography.getAddressFromPassphrase(document.getElementById("passphrase").value),
+                    recipientId: GLOBAL_TREASURY_ADDRESS,
                     timestamp: getTimestamp(),
                 });
                 tx.sign(passphrase);
@@ -221,16 +221,17 @@
                     senderId: lisk.cryptography.getAddressFromPassphrase(document.getElementById("passphrase").value),
                     sort: 'timestamp:desc',
                     limit: 10,
-                    type: 12
+                    type: 1001
                   }).then(function(value) {
                     document.getElementById("tx_loader").innerHTML=""; 
                     var html = "";
                     for (var i = 0; i<value["data"].length; i++) {
                         var tx_item = value["data"][i];
                         var id = tx_item["id"];
+                        var recipientId = tx_item["recipientId"];
                         var amount = lisk.transactions.utils.convertBeddowsToLSK(tx_item["amount"]);
                         var assets = JSON.stringify(tx_item["asset"]);
-                        html = html + "bet id: "+id+" amount: "+amount+" assets: "+assets+"<br>";
+                        html = html + "bet id: "+id+" amount: "+amount+" assets: "+assets+" to: "+recipientId+"<br>";
                     }
                     document.getElementById("tx_history").innerHTML=html;
                     setTimeout(

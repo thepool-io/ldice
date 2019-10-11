@@ -12,7 +12,7 @@ configDevnet.app.genesisConfig.REWARDS.MILESTONES = ["50000000","40000000","3000
 
 const app = new Application(genesisBlockDevnet, configDevnet);
 
-app.registerModule(RollModule, { blockHashDistance: 2 }); //rolling delay 1 - 10
+app.registerModule(RollModule, { blockHashDistance: 1 });
 app.registerTransaction(BetTransaction);
 
 app

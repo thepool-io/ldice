@@ -26,7 +26,7 @@ const sqlFiles = {
   updateOne: 'accounts/update_one.sql',
 };
 
-class RollAccount extends AccountEntity {
+class CustomAccountEntity extends AccountEntity {
   /**
    * Constructor
    * @param {BaseAdapter} adapter - Adapter to retrive the data from
@@ -40,7 +40,6 @@ class RollAccount extends AccountEntity {
     this.SQLs = this.loadSQLFiles('account', sqlFiles, this.sqlDirectory);
   }
 
-
   /**
    * Update one record based on the condition given
    *
@@ -53,20 +52,17 @@ class RollAccount extends AccountEntity {
   updateOne(filters, data, _options, tx) {
     const atLeastOneRequired = true;
     this.validateFilters(filters, atLeastOneRequired);
-
     const objectData = _.omit(data, readOnlyFields);
     const mergedFilters = this.mergeFilters(filters);
     const parsedFilters = this.parseFilters(mergedFilters);
     const updateSet = this.getUpdateSet(objectData);
-
     const params = {
       ...objectData,
       parsedFilters,
       updateSet,
     };
-
     return this.adapter.executeFile(this.SQLs.updateOne, params, {}, tx);
   }
 }
 
-module.exports = RollAccount;
+module.exports = CustomAccountEntity;

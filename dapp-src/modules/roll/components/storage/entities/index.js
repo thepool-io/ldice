@@ -1,7 +1,7 @@
 'use strict';
 
-const RollAccount = require('./account');
+const CustomAccountEntity = require('./account');
 
 module.exports = {
-  RollAccount,
+  CustomAccountEntity,
 };

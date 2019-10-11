@@ -14,24 +14,25 @@
 
 'use strict';
 
-const Roll = require('./roll');
+const Drawing = require('./moduleBase');
 const BaseModule = require('lisk-framework/src/modules/base_module');
 
 class RollModule extends BaseModule {
   constructor(options) {
     super(options);
-    this.roll = null;
+    this.drawing = null;
   }
 
   static get alias() {
-    return 'roll';
+    return 'drawing';
   }
 
   static get info() {
     return {
-      author: 'Moosty',
-      version: '0.0.1',
-      name: 'ldice-roll',
+      author: 'thepool',
+      version: '1.0.0',
+      name: 'ldice-draw-module',
+      credits: 'Corbifex',
     };
   }
 
@@ -48,15 +49,15 @@ class RollModule extends BaseModule {
   }
 
   async load(channel) {
-    this.roll = new Roll(channel, this.options);
+    this.drawing = new Drawing(channel, this.options);
 
     channel.once('app:ready', async () => {
-      await this.roll.bootstrap();
+      await this.drawing.bootstrap();
     });
   }
 
   async unload() {
-    return this.roll ? this.roll.cleanup(0) : true;
+    return this.drawing ? this.drawing.cleanup(0) : true;
   }
 }
 
