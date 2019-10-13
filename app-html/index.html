@@ -69,6 +69,7 @@
                     <div id="dapp_currentTime"></div>
                     <div id="dapp_transactions_confirmed"></div>
                     <div id="dapp_transactions_pending"></div>
+                    <div id="dapp_treasury"></div>
                     <div id="loading"><img src="img/loading.gif" width="25" height="25"> Loading...</div>
                     <br>
                 </aside>
@@ -99,12 +100,14 @@
             var winning_chance = document.getElementById("winning_chance");
             var number_to_roll = document.getElementById("number_to_roll");
             var probable_payout = document.getElementById("probable_payout");
+            var treasury_balance = 9999999;
 
             /// Init interface ///
             passphraseChange();
             BetChange();
             RefreshLastTx();
             GetAccountDetails();
+            GetTreasuryDetails();
             GetAsync(GLOBAL_DAPP_NODE+"/api/node/status",setFields);
 
             /// Main ///
@@ -145,7 +148,15 @@
                 number_to_roll.innerHTML = "Roll number below: "+number_to_roll_value;
                 var CurrentAmount = parseFloat(document.getElementById("amount").value);
                 var predirect_profit = CalculateBetProfit(CurrentAmount,slider.value);
-                probable_payout.innerHTML = "Probable profit: "+CurrentAmount+" LSK back and +"+predirect_profit.toFixed(8);+" LSK profit";
+                var maxProfit = treasury_balance/GLOBAL_MAX_PROFIT_DIVISOR;
+                console.log(maxProfit+"/"+predirect_profit);
+                if (predirect_profit >= maxProfit) {
+                    console.log("too high");
+                    probable_payout.innerHTML = "Probable profit: "+CurrentAmount+" LSK back and +"+predirect_profit.toFixed(8)+" LSK profit<br><font color='red'>(MAX PROFIT REACHED("+maxProfit+"), TX WILL FAIL)</font>";
+                } else {
+                    probable_payout.innerHTML = "Probable profit: "+CurrentAmount+" LSK back and +"+predirect_profit.toFixed(8)+" LSK profit";
+                    console.log("ok");
+                }
             }
 
             function passphraseChange(){
@@ -184,6 +195,20 @@
                         document.getElementById("loading").innerHTML='<div id="loading_info"><img src="img/loading.gif" width="25" height="25">Reloading...</div>'; 
                         GetAsync(GLOBAL_DAPP_NODE+"/api/node/status",setFields);
                 }, GLOBAL_DATA_RELOAD_INTERVAL);
+            }
+
+            function GetTreasuryDetails(){
+                LiskNode.accounts.get({
+                    address: "0L"
+                  }).then(function(value) {
+                    var balance = lisk.transactions.utils.convertBeddowsToLSK(value["data"][0]["balance"]);
+                    treasury_balance = balance;
+                    document.getElementById("dapp_treasury").innerHTML='Treasury balance: '+balance+'<br>';
+                    setTimeout(
+                        function() {
+                            GetTreasuryDetails();
+                    }, GLOBAL_DATA_RELOAD_INTERVAL);
+                });
             }
 
             function GetAccountDetails(){

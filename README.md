@@ -12,8 +12,6 @@ sudo node index.js | npx bunyan -o short
 -Verify and debug undoAsset (current code totally untested)<br>
 -Proper client side application<br>
 
--Max profit limited by % of current treasury holdings<br>
--Allow bet only if enough balance<br>
 -Prepare genesis and network config<br>
 -Ensure that malicious delegate will fork<br>
 
