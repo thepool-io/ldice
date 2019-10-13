@@ -5,6 +5,7 @@ const {
     BigNum,
 } = require('lisk-sdk');
 const {utils} = require("@liskhq/lisk-transactions");
+const Profit = require('../logic/profit.js');
 
 class BetTransaction extends BaseTransaction {
     static get TYPE () {
@@ -89,44 +90,63 @@ class BetTransaction extends BaseTransaction {
             errors.push(balanceError);
         }
 
-        //check if sender has enough balance
-        const viableSenderBalance = new BigNum(sender.balance).cmp(BigNum(this.amount));
-        if (viableSenderBalance >= 0) {
-            //subtract amount from sender
-            const updatedSenderBalance = new BigNum(sender.balance).sub(BigNum(this.amount));
+        //read recipient or get default
+        const recipient = store.account.getOrDefault(this.recipientId);
 
-            //prepare updated sender
-            const updatedSender = {
-                ...sender,
-                balance: updatedSenderBalance.toString(),
-            };
+        //calculate possible profit
+        const pureProfit = new Profit(parseInt(this.asset.bet_number-1),this.amount).get();
 
-            //save sender to db
-            store.account.set(updatedSender.address, updatedSender);
+        //get current max profit
+        const currentMaxProfit = new BigNum(recipient.balance).div(100);//max profit = 0.01 of treasury
 
-            //read recipient or get default
-            const recipient = store.account.getOrDefault(this.recipientId);
+        //check if pureProfit lower than max profit
+        const viableProfit = currentMaxProfit.cmp(pureProfit);
+        if (viableProfit >= 0) {
+            //check if sender has enough balance
+            const viableSenderBalance = new BigNum(sender.balance).cmp(BigNum(this.amount));
+            if (viableSenderBalance >= 0) {
+                //subtract amount from sender
+                const updatedSenderBalance = new BigNum(sender.balance).sub(BigNum(this.amount));
 
-            //add balance to recipient (treasury)
-            const updatedRecipientBalance = new BigNum(recipient.balance).add(
-                this.amount,
-            );
+                //prepare updated sender
+                const updatedSender = {
+                    ...sender,
+                    balance: updatedSenderBalance.toString(),
+                };
 
-            //prepare updated recipient
-            const updatedRecipient = {
-                ...recipient,
-                balance: updatedRecipientBalance.toString(),
-            };
+                //save sender to db
+                store.account.set(updatedSender.address, updatedSender);
 
-            //save recipient to db
-            store.account.set(updatedRecipient.address, updatedRecipient);
+                //add balance to recipient (treasury)
+                const updatedRecipientBalance = new BigNum(recipient.balance).add(
+                    this.amount,
+                );
+
+                //prepare updated recipient
+                const updatedRecipient = {
+                    ...recipient,
+                    balance: updatedRecipientBalance.toString(),
+                };
+
+                //save recipient to db
+                store.account.set(updatedRecipient.address, updatedRecipient);
+            } else {
+                errors.push(
+                    new TransactionError(
+                        'sender has not enough balance',
+                        sender.balance,
+                        '/',
+                        this.amount,
+                    ),
+                );
+            }
         } else {
             errors.push(
                 new TransactionError(
-                    'sender has not enough balance',
-                    sender.balance,
+                    'max profit reached (decrease bet amount or increase probability)->',
+                    pureProfit,
                     '/',
-                    this.amount,
+                    currentMaxProfit,
                 ),
             );
         }
