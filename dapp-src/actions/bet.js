@@ -77,34 +77,47 @@ class BetTransaction extends BaseTransaction {
             errors.push(balanceError);
         }
 
-        //subtract amount from sender
-        const updatedSenderBalance = new BigNum(sender.balance).sub(this.amount);
+        //check if sender has enough balance
+        const viableSenderBalance = new BigNum(sender.balance).cmp(this.amount);
+        if (viableSenderBalance >= 0) {
+            //subtract amount from sender
+            const updatedSenderBalance = new BigNum(sender.balance).sub(this.amount);
 
-        //prepare updated sender
-        const updatedSender = {
-            ...sender,
-            balance: updatedSenderBalance.toString(),
-        };
+            //prepare updated sender
+            const updatedSender = {
+                ...sender,
+                balance: updatedSenderBalance.toString(),
+            };
 
-        //save sender to db
-        store.account.set(updatedSender.address, updatedSender);
+            //save sender to db
+            store.account.set(updatedSender.address, updatedSender);
 
-        //read recipient or get default
-        const recipient = store.account.getOrDefault(this.recipientId);
+            //read recipient or get default
+            const recipient = store.account.getOrDefault(this.recipientId);
 
-        //add balance to recipient (treasury)
-        const updatedRecipientBalance = new BigNum(recipient.balance).add(
-            this.amount,
-        );
+            //add balance to recipient (treasury)
+            const updatedRecipientBalance = new BigNum(recipient.balance).add(
+                this.amount,
+            );
 
-        //prepare updated recipient
-        const updatedRecipient = {
-            ...recipient,
-            balance: updatedRecipientBalance.toString(),
-        };
+            //prepare updated recipient
+            const updatedRecipient = {
+                ...recipient,
+                balance: updatedRecipientBalance.toString(),
+            };
 
-        //save recipient to db
-        store.account.set(updatedRecipient.address, updatedRecipient);
+            //save recipient to db
+            store.account.set(updatedRecipient.address, updatedRecipient);
+        } else {
+            errors.push(
+                new TransactionError(
+                    'sender has not enough balance',
+                    sender.balance,
+                    '/',
+                    this.amount,
+                ),
+            );
+        }
 
         return errors;
     }
