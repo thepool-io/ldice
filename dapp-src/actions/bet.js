@@ -54,6 +54,18 @@ class BetTransaction extends BaseTransaction {
                 ),
             );
         }
+        //check if sender has enough balance
+        const viableBetAmount = new BigNum(this.amount).cmp(BigNum(10000000));//min bet size = 0.1
+        if (viableBetAmount < 0) {
+            errors.push(
+                new TransactionError(
+                    'minimum bet is 0.1 LSK',
+                    this.id,
+                    'amount:',
+                    this.amount,
+                ),
+            );
+        }
         /*
         TODO
         -Check all error messages when fixed in lisk-sdk
@@ -78,10 +90,10 @@ class BetTransaction extends BaseTransaction {
         }
 
         //check if sender has enough balance
-        const viableSenderBalance = new BigNum(sender.balance).cmp(this.amount);
+        const viableSenderBalance = new BigNum(sender.balance).cmp(BigNum(this.amount));
         if (viableSenderBalance >= 0) {
             //subtract amount from sender
-            const updatedSenderBalance = new BigNum(sender.balance).sub(this.amount);
+            const updatedSenderBalance = new BigNum(sender.balance).sub(BigNum(this.amount));
 
             //prepare updated sender
             const updatedSender = {
