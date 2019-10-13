@@ -1,6 +1,7 @@
 'use strict';
 const {BigNum} = require('lisk-sdk');
 const Prando = require('prando');
+const Profit = require('./profit.js');
 
 module.exports = class Draw {
     constructor(blockHash, txHash, betNumber, betAmount) {
@@ -26,13 +27,7 @@ module.exports = class Draw {
         //check if bet won or lost
         if (rolledNumber <= betNumber) {
           //calculate pure profit
-          pureProfit = new BigNum(betAmount.mul(new BigNum(100 - betNumber)).div(betNumber).add(betAmount).mul(990).div(1000).sub(betAmount));
-
-          //remove floating point, probably should be done differently, but BigNum lacks of this feature?
-          if (pureProfit.toString().includes(".")) {
-            pureProfit = new BigNum(pureProfit.toString().split(".")[0]);
-          }
-
+          pureProfit = new Profit(betNumber,betAmount).get();
           //calculate total profit
           totalProfit = new BigNum(betAmount).add(pureProfit);
           betWon = true;
@@ -41,6 +36,6 @@ module.exports = class Draw {
           totalProfit = new BigNum(betAmount).neg();
           betWon = false;
         }
-        return {totalProfit: totalProfit, pureProfit: pureProfit, rolledNumber: rolledNumber, betWon: betWon};
+        return {totalProfit: totalProfit, pureProfit: pureProfit, rolledNumber: rolledNumber, betNumber: betNumber, betWon: betWon};
     }
 }
