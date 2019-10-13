@@ -1,5 +1,4 @@
 'use strict';
-'use strict';
 const {BigNum} = require('lisk-sdk');
 const Prando = require('prando');
 
