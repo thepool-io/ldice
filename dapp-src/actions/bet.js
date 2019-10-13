@@ -55,7 +55,7 @@ class BetTransaction extends BaseTransaction {
                 ),
             );
         }
-        //check if sender has enough balance
+        //check if bet amount meets minimum size requirement
         const viableBetAmount = new BigNum(this.amount).cmp(BigNum(10000000));//min bet size = 0.1
         if (viableBetAmount < 0) {
             errors.push(
