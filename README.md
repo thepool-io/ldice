@@ -14,6 +14,7 @@ sudo node index.js | npx bunyan -o short
 
 -Prepare genesis and network config<br>
 -Ensure that malicious delegate will fork<br>
+-undoAsset in case of drawing module failure<br>
 
 # credits
 Corbifex | Moosty
