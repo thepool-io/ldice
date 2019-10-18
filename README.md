@@ -3,7 +3,13 @@ Proof of concept of provably fair dice game made with lisk-sdk
 
 ```
 npm install
+createdb lisk_test --owner lisk && psql -d lisk_test -c "alter user lisk with password 'password';"
 sudo node index.js | npx bunyan -o short
+```
+
+Cleanup
+```
+dropdb lisk_test && createdb lisk_test --owner lisk && psql -d lisk_test -c "alter user lisk with password 'password';"
 ```
 
 # todo
