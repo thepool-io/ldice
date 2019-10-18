@@ -204,11 +204,11 @@
                     var balance = lisk.transactions.utils.convertBeddowsToLSK(value["data"][0]["balance"]);
                     treasury_balance = balance;
                     document.getElementById("dapp_treasury").innerHTML='Treasury balance: '+balance+'<br>';
-                    setTimeout(
-                        function() {
-                            GetTreasuryDetails();
-                    }, GLOBAL_DATA_RELOAD_INTERVAL);
                 });
+                setTimeout(
+                    function() {
+                        GetTreasuryDetails();
+                }, GLOBAL_DATA_RELOAD_INTERVAL);
             }
 
             function GetAccountDetails(){
@@ -233,11 +233,11 @@
                         }
                     }
                     document.getElementById("current_account_info").innerHTML='Balance: '+balance+'<br>'+html;
-                    setTimeout(
-                        function() {
-                            GetAccountDetails();
-                    }, GLOBAL_DATA_RELOAD_INTERVAL);
                 });
+                setTimeout(
+                    function() {
+                        GetAccountDetails();
+                }, GLOBAL_DATA_RELOAD_INTERVAL);
             }
 
             function RefreshLastTx(){
@@ -259,11 +259,11 @@
                         html = html + "bet id: "+id+" amount: "+amount+" assets: "+assets+" to: "+recipientId+"<br>";
                     }
                     document.getElementById("tx_history").innerHTML=html;
-                    setTimeout(
-                        function() {
-                            RefreshLastTx();
-                    }, GLOBAL_DATA_RELOAD_INTERVAL);
                 });
+                setTimeout(
+                    function() {
+                        RefreshLastTx();
+                }, GLOBAL_DATA_RELOAD_INTERVAL);
             }
             ////////////////////////////////////////
         </script>
