@@ -18,7 +18,6 @@ dropdb lisk_test && createdb lisk_test --owner lisk && psql -d lisk_test -c "alt
 -Verify and debug undoAsset (current code totally untested)<br>
 -Proper client side application<br>
 
--Prepare genesis and network config<br>
 -Ensure that malicious delegate will fork<br>
 -undoAsset in case of drawing module failure<br>
 

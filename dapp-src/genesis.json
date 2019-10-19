@@ -1,0 +1,121 @@
+{
+  "version": 0,
+  "totalFee": "0",
+  "reward": "0",
+  "timestamp": 0,
+  "numberOfTransactions": 7,
+  "payloadLength": 904,
+  "previousBlock": null,
+  "payloadHash": "14417e1697fd4707cfeff86b9ee97888408a0aabd61cfb41070f4ab3ddcf2449",
+  "totalAmount": "505000000000000",
+  "generatorPublicKey": "23876d05c03fd4ba29c1efc1f7a5249db19ca4dc33c4df59088f4ee4b259774b",
+  "transactions": [
+    {
+      "id": "15187230913298515881",
+      "amount": "500000000000000",
+      "type": 0,
+      "timestamp": 0,
+      "senderPublicKey": "23876d05c03fd4ba29c1efc1f7a5249db19ca4dc33c4df59088f4ee4b259774b",
+      "senderId": "3690561042129882905L",
+      "recipientId": "1693372163817076574L",
+      "fee": "0",
+      "signature": "05019ae92aba077e7cd93381f41999cbb39431bfdb724f215f6eef7edee2b6bebf88c2baa6c7c59a77cb4d1ef625d4de1e467ff94c99d3a70bf74b53f0b8600a",
+      "asset": {}
+    },
+    {
+      "id": "10886538893594375788",
+      "amount": "5000000000000",
+      "type": 0,
+      "timestamp": 0,
+      "senderPublicKey": "23876d05c03fd4ba29c1efc1f7a5249db19ca4dc33c4df59088f4ee4b259774b",
+      "senderId": "3690561042129882905L",
+      "recipientId": "0L",
+      "fee": "0",
+      "signature": "daae3e5458e1e5b4e112e62696d03126f5a8e803e3fbf245126f21f38f65300d984f4879708b94ad0ba4c4563aafaada922041975fa1a300e187de3dcb357208",
+      "asset": {}
+    },
+    {
+      "id": "1841192995744325749",
+      "amount": "0",
+      "type": 2,
+      "timestamp": 0,
+      "senderPublicKey": "031b1695c4b86f800d38268620c3161236b9f06dd39c8af9b3545792075a10ad",
+      "senderId": "3737145999253975606L",
+      "recipientId": null,
+      "fee": "0",
+      "signature": "eb1d7e7624a85d4f4887064820999917a654bd39a98f1c15c617efb8c04da936670d945f8094d703b359e35f2dae11c13e110def48175ddca434b1ffcff6730e",
+      "asset": {
+        "delegate": {
+          "username": "goodboy_genesis_0"
+        }
+      }
+    },
+    {
+      "id": "8334804444335396783",
+      "amount": "0",
+      "type": 2,
+      "timestamp": 0,
+      "senderPublicKey": "bb33fc1a19cfbda689f7941fffa34badf16e75348d6dd16833298f774d11f3bf",
+      "senderId": "9449847954655426588L",
+      "recipientId": null,
+      "fee": "0",
+      "signature": "c2e8d1efb1f7340b779cddc0f7441f79d4b0ba561b9ad07d4f0c2ec74d4ad08f1d494164b476e9c8147ff1548d532580f03d0b27e59f3c1a747086dbe5802c0d",
+      "asset": {
+        "delegate": {
+          "username": "goodboy_genesis_1"
+        }
+      }
+    },
+    {
+      "id": "10793201449408601811",
+      "amount": "0",
+      "type": 2,
+      "timestamp": 0,
+      "senderPublicKey": "0013bd00bf42a31be2962bc3c3bd3cd2872373ec863bc05ffa6e945da4254b83",
+      "senderId": "6780924215011625728L",
+      "recipientId": null,
+      "fee": "0",
+      "signature": "842a13d9338f31fac2ca9d81b06145f57619e4522a6c49438c1fe6aa9d3dddd9d2804861f7b1dcd4edc1d9855ae6a60c2d9e635fb2b00f62e824bf39e899ec0b",
+      "asset": {
+        "delegate": {
+          "username": "goodboy_genesis_2"
+        }
+      }
+    },
+    {
+      "id": "666116900556948217",
+      "amount": "0",
+      "type": 2,
+      "timestamp": 0,
+      "senderPublicKey": "9117cfd3ba7da73c510fdf60f75ab369c7f3ac4ea38f79a7756b42c5efc9fa76",
+      "senderId": "18111747980964301429L",
+      "recipientId": null,
+      "fee": "0",
+      "signature": "fc454fa3592640543bc38d6f7d78e194dec34acd442814b5df1252cdf9e9b6ec7f531dd3754f947e65b0f4284a4482474136283a0f0bb8102a8943eeae2c4e06",
+      "asset": {
+        "delegate": {
+          "username": "goodboy_genesis_3"
+        }
+      }
+    },
+    {
+      "id": "4574232257878817370",
+      "amount": "0",
+      "type": 2,
+      "timestamp": 0,
+      "senderPublicKey": "b35887abdfe7b7b5a2b73891b919f90b5030fa31d344db88933a1f668e88cfc9",
+      "senderId": "8738419690211051022L",
+      "recipientId": null,
+      "fee": "0",
+      "signature": "fa312019051ecc89b8109324a7961aa72afb2c5fb53ab8d014a52ed769a02c231f8dd612b9ba5f911d54b532864306c722f27ff8ee91277189eac1abbcf9ef09",
+      "asset": {
+        "delegate": {
+          "username": "goodboy_genesis_4"
+        }
+      }
+    }
+  ],
+  "height": 1,
+  "blockSignature": "fc91d648dfe5ba2322779f223e79ccb1ca3e55901b36ef1cfb8bc44e98b7b849189dd2ebaf6a9c9125fb8b809c7c2c939bd5e7c99034c0d98d4f60f3708c6405",
+  "id": "1222192664868467866"
+}
