@@ -18,7 +18,7 @@ const app = new Application(dappGenesis, dappConfig);
 app.constants = {
     ...app.constants,
     ...{
-        ACTIVE_DELEGATES: 5,
+        ACTIVE_DELEGATES: 9,
         MAX_VOTES_PER_ACCOUNT: 21,
         TOTAL_AMOUNT: 505000000000000
     }
