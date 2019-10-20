@@ -45,13 +45,13 @@ class BetTransaction extends BaseTransaction {
                 ),
             );
         }
-        if (this.asset.bet_number < 2 && this.asset.bet_number > 99) {
+        if (this.asset.data.bet_number < 2 && this.asset.data.bet_number > 99) {
             errors.push(
                 new TransactionError(
                     '`bet_number` must be between 2 and 99.',
                     this.id,
                     '.bet_number',
-                    this.asset.bet_number,
+                    this.asset.data.bet_number,
                 ),
             );
         }
@@ -94,7 +94,7 @@ class BetTransaction extends BaseTransaction {
         const recipient = store.account.getOrDefault(this.recipientId);
 
         //calculate possible profit
-        const pureProfit = new Profit(parseInt(this.asset.bet_number-1),this.amount).get();
+        const pureProfit = new Profit(parseInt(this.asset.data.bet_number-1),this.amount).get();
 
         //get current max profit
         const currentMaxProfit = new BigNum(recipient.balance).div(100);//max profit = 0.01 of treasury

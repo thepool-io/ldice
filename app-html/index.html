@@ -114,7 +114,9 @@
             function Gamble(amount, bet_number, passphrase){
                 let tx =  new BetTransaction({
                     asset: {
-                        bet_number: bet_number,
+                        data: {
+                            bet_number: bet_number,
+                        },
                     },
                     amount: `${lisk.transactions.utils.convertLSKToBeddows(amount)}`,
                     fee: `${lisk.transactions.utils.convertLSKToBeddows('0.1')}`,
