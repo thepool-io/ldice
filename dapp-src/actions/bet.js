@@ -24,6 +24,18 @@ class BetTransaction extends BaseTransaction {
             },
         ]);
     }
+    assetFromSync(raw){
+        if (raw.tf_data) {
+          // This line will throw if there is an error
+          const data = raw.tf_data.toString('utf8');
+          return { data };
+        }
+        return undefined;
+    }
+    assetToBytes() {
+        const { data } = this.asset;
+        return data ? Buffer.from(data, 'utf8') : Buffer.alloc(0);
+    }
     validateAsset() {
         const errors = [];
         if (!utils.validateTransferAmount(this.amount.toString())) {

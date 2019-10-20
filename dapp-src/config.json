@@ -1,8 +1,8 @@
 {
 	"app": {
 		"label": "ldice",
-		"minVersion": "0.0.3",
-		"version": "0.0.3",
+		"minVersion": "0.0.4",
+		"version": "0.0.4",
 		"protocolVersion": "1.1",
 		"ipc": {
 			"enabled": true
