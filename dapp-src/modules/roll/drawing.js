@@ -31,7 +31,7 @@ module.exports = ({components, channel, config}, logger) => {
         //draw
         const drawResult = new Draw(blockHash,
                                 lastTransactions[i].signature,
-                                lastTransactions[i].asset.data.bet_number,
+                                lastTransactions[i].asset.data,
                                 lastTransactions[i].amount).get();
 
         //update gambler balance
@@ -50,7 +50,7 @@ module.exports = ({components, channel, config}, logger) => {
             {
               [lastTransactions[i].id]:
                 { //these are not necessary to store as bet result can be recreated from blockHash+txHash, however perhaps it’s better for user readability and traceability
-                  bet_number: lastTransactions[i].asset.data.bet_number,
+                  bet_number: lastTransactions[i].asset.data,
                   profit: drawResult.totalProfit.toString(),
                   rolled_number: drawResult.rolledNumber
                 }
