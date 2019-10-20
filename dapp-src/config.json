@@ -1,8 +1,8 @@
 {
 	"app": {
 		"label": "ldice",
-		"minVersion": "0.0.0",
-		"version": "0.0.0",
+		"minVersion": "0.0.1",
+		"version": "0.0.1",
 		"protocolVersion": "1.1",
 		"ipc": {
 			"enabled": true
@@ -15,7 +15,7 @@
 				"MILESTONES": [
 					"0"
 				],
-				"OFFSET": 2160,
+				"OFFSET": 1000000000,
 				"DISTANCE": 1
 			}
 		}
