@@ -36,7 +36,7 @@ dropdb lisk_test && createdb lisk_test --owner lisk && psql -d lisk_test -c "alt
 -Verify and debug undoAsset (current code totally untested)<br>
 -Proper client side application<br>
 
--chain:blocks:change won't be called during sync (Urgent fix)
+-chain:blocks:change won't be called during sync (Urgent fix)<br>
 -Ensure that malicious delegate will fork<br>
 -undoAsset in case of drawing module failure<br>
 
