@@ -20,6 +20,7 @@ sudo -u postgres createuser --createdb lisk
 ldice install
 ```
 git clone https://github.com/thepool-io/ldice
+cd ldice/dapp-src
 npm install
 createdb lisk_test --owner lisk && psql -d lisk_test -c "alter user lisk with password 'password';"
 sudo node index.js | npx bunyan -o short
