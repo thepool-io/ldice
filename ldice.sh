@@ -76,7 +76,8 @@ setnet(){
 }
 
 fullpreqinstall(){
-  sudo apt update && apt upgrade -y
+  sudo apt update
+  sudo apt upgrade -y
   sudo apt install -y libtool automake autoconf curl python-minimal build-essential moreutils jq screen
   sudo apt-get purge -y postgres* 
   sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
