@@ -39,10 +39,5 @@ fullpreqinstall - Installs all dependencies, Ubuntu 18.04 tested.
 -Verify behaviour undoAsset<br>
 -DEX integration<br>
 
-<<<<<<< HEAD
 # Credits
 Corbifex | Moosty
-=======
-# credits
-Corbifex | Moosty
->>>>>>> c1a9e44ec38fbeea8c9e4f429466b82b8c95ebae
