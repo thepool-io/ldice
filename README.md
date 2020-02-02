@@ -32,7 +32,7 @@ fullpreqinstall - Installs all dependencies, Ubuntu 18.04 tested.
 
 # Tasks to complete
 -Native token rights to profit, from the treasury revenue (dividends)<br>
--Verify behaviour undoAsset<br>
+-Verify behaviour of undoAsset<br>
 -DEX integration<br>
 
 # Credits
