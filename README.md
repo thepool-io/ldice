@@ -24,7 +24,7 @@ Usage
 #####################################
 Methods
 start - starts ldice node
-stop - stop ldice node. Ctrl+C to stop. Wait for graceful exit.
+stop - stops ldice node. Ctrl+C to stop. Wait for graceful exit.
 logs - prints current logs
 dblogs - prints current database logs
 preparedb - prepares database
