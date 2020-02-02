@@ -18,10 +18,6 @@ bash ldice.sh logs
 
 Usage help
 ```sh
-#####################################
->>>LDICE - Lisk Dice (LDT) Manager<<<
-#####################################
-Methods
 start - starts ldice node
 stop - stops ldice node. Ctrl+C to stop. Wait for graceful exit.
 logs - prints current logs
