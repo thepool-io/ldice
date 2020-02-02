@@ -1,7 +1,7 @@
 {
   "name": "ldice",
   "version": "1.0.1",
-  "description": "cool lisk dice dapp",
+  "description": "Provably fair dice game made with lisk-sdk",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
