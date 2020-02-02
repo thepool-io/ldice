@@ -1,154 +1,163 @@
 {
-	"app": {
-		"label": "ldice",
-		"minVersion": "0.0.4",
-		"version": "0.0.4",
-		"protocolVersion": "1.1",
-		"ipc": {
-			"enabled": true
-		},
-		"genesisConfig": {
-			"EPOCH_TIME": "2019-04-24T17:00:00.000Z",
-			"BLOCK_TIME": 5,
-			"MAX_TRANSACTIONS_PER_BLOCK": 25,
-			"REWARDS": {
-				"MILESTONES": [
-					"0"
-				],
-				"OFFSET": 1000000000,
-				"DISTANCE": 1
-			}
-		}
-	},
-	"components": {
-		"logger": {
-			"fileLogLevel": "debug",
-			"logFileName": "logs/testnet/lisk.log",
-			"consoleLogLevel": "info"
-		},
-		"storage": {
-			"logFileName": "logs/testnet/lisk_db.log",
-			"host": "localhost",
-			"port": 5432,
-			"database": "lisk_test",
-			"user": "lisk",
-			"password": "password",
-			"min": 10,
-			"max": 25,
-			"poolIdleTimeout": 30000,
-			"reapIntervalMillis": 1000,
-			"logEvents": ["error"]
-		},
-		"cache": {
-			"enabled": false,
-			"host": "127.0.0.1",
-			"port": 6380,
-			"db": 0,
-			"password": null
-		}
-	},
-	"modules": {
-		"http_api": {
-			"enabled": true,
-			"httpPort": 4000,
-			"address": "0.0.0.0",
-			"trustProxy": false,
-			"access": {
-				"public": true,
-				"whiteList": ["127.0.0.1"]
-			},
-			"ssl": {
-				"enabled": false,
-				"options": {
-					"port": 443,
-					"address": "0.0.0.0",
-					"key": "./ssl/lisk.key",
-					"cert": "./ssl/lisk.crt"
-				}
-			},
-			"options": {
-				"limits": {
-					"max": 0,
-					"delayMs": 0,
-					"delayAfter": 0,
-					"windowMs": 60000,
-					"headersTimeout": 5000,
-					"serverSetTimeout": 20000
-				},
-				"cors": {
-					"origin": "*",
-					"methods": ["GET", "POST", "PUT"]
-				}
-			},
-			"forging": {
-				"access": {
-					"whiteList": ["127.0.0.1"]
-				}
-			}
-		},
-		"chain": {
-			"forging": {
-				"force": false,
-				"delegates": [
-				],
-				"defaultPassword": "123"
-			},
-			"broadcasts": {
-				"active": true,
-				"broadcastInterval": 5000,
-				"releaseLimit": 25
-			},
-			"transactions": {
-				"maxTransactionsPerQueue": 1000
-			},
-			"syncing": {
-				"active": true
-			},
-			"loading": {
-				"loadPerIteration": 5000,
-				"rebuildUpToRound": null
-			},
-			"exceptions": {
-				"blockRewards": [],
-				"senderPublicKey": [],
-				"signatures": [],
-				"signSignature": [],
-				"multisignatures": [],
-				"votes": [],
-				"inertTransactions": [],
-				"rounds": {},
-				"precedent": {
-					"disableDappTransfer": 0,
-					"disableDappTransaction": 0
-				},
-				"ignoreDelegateListCacheForRounds": [],
-				"blockVersions": {},
-				"roundVotes": [],
-				"recipientLeadingZero": {},
-				"recipientExceedingUint64": {},
-				"duplicatedSignatures": {},
-				"transactionWithNullByte": []
-			}
-		},
-		"network": {
-			"wsPort": 5000,
-			"address": "0.0.0.0",
-			"discoveryInterval": 30000,
-			"seedPeers": [
-				{
-					"ip": "127.0.0.1",
-					"wsPort": 5000
-				},
-				{
-					"ip": "159.65.53.193",
-					"wsPort": 5000
-				}
-			],
-			"blacklistedPeers": [],
-			"ackTimeout": 20000,
-			"connectTimeout": 5000,
-			"wsEngine": "ws",
-			"emitPeerLimit": 25
-		}
-	}
+  "app": {
+    "label": "ldice",
+    "minVersion": "0.0.4",
+    "version": "0.0.5",
+    "protocolVersion": "1.1",
+    "ipc": {
+      "enabled": true
+    },
+    "genesisConfig": {
+      "EPOCH_TIME": "2019-04-24T17:00:00.000Z",
+      "BLOCK_TIME": 5,
+      "MAX_TRANSACTIONS_PER_BLOCK": 25,
+      "REWARDS": {
+        "MILESTONES": [
+          "0"
+        ],
+        "OFFSET": 1000000000,
+        "DISTANCE": 1
+      }
+    }
+  },
+  "components": {
+    "logger": {
+      "fileLogLevel": "debug",
+      "logFileName": "logs/ldice_test/lisk.log",
+      "consoleLogLevel": "info"
+    },
+    "storage": {
+      "logFileName": "logs/ldice_test/lisk_db.log",
+      "host": "localhost",
+      "port": 5432,
+      "database": "ldice_test",
+      "user": "ldice",
+      "password": "password",
+      "min": 10,
+      "max": 25,
+      "poolIdleTimeout": 30000,
+      "reapIntervalMillis": 1000,
+      "logEvents": [
+        "error"
+      ]
+    },
+    "cache": {
+      "enabled": false,
+      "host": "127.0.0.1",
+      "port": 6380,
+      "db": 0,
+      "password": null
+    }
+  },
+  "modules": {
+    "http_api": {
+      "enabled": true,
+      "httpPort": 4000,
+      "address": "0.0.0.0",
+      "trustProxy": false,
+      "access": {
+        "public": true,
+        "whiteList": [
+          "127.0.0.1"
+        ]
+      },
+      "ssl": {
+        "enabled": false,
+        "options": {
+          "port": 443,
+          "address": "0.0.0.0",
+          "key": "./ssl/lisk.key",
+          "cert": "./ssl/lisk.crt"
+        }
+      },
+      "options": {
+        "limits": {
+          "max": 0,
+          "delayMs": 0,
+          "delayAfter": 0,
+          "windowMs": 60000,
+          "headersTimeout": 5000,
+          "serverSetTimeout": 20000
+        },
+        "cors": {
+          "origin": "*",
+          "methods": [
+            "GET",
+            "POST",
+            "PUT"
+          ]
+        }
+      },
+      "forging": {
+        "access": {
+          "whiteList": [
+            "127.0.0.1"
+          ]
+        }
+      }
+    },
+    "chain": {
+      "forging": {
+        "force": false,
+        "delegates": [],
+        "defaultPassword": "123"
+      },
+      "broadcasts": {
+        "active": true,
+        "broadcastInterval": 5000,
+        "releaseLimit": 25
+      },
+      "transactions": {
+        "maxTransactionsPerQueue": 1000
+      },
+      "syncing": {
+        "active": true
+      },
+      "loading": {
+        "loadPerIteration": 5000,
+        "rebuildUpToRound": null
+      },
+      "exceptions": {
+        "blockRewards": [],
+        "senderPublicKey": [],
+        "signatures": [],
+        "signSignature": [],
+        "multisignatures": [],
+        "votes": [],
+        "inertTransactions": [],
+        "rounds": {},
+        "precedent": {
+          "disableDappTransfer": 0,
+          "disableDappTransaction": 0
+        },
+        "ignoreDelegateListCacheForRounds": [],
+        "blockVersions": {},
+        "roundVotes": [],
+        "recipientLeadingZero": {},
+        "recipientExceedingUint64": {},
+        "duplicatedSignatures": {},
+        "transactionWithNullByte": []
+      }
+    },
+    "network": {
+      "wsPort": 5000,
+      "address": "0.0.0.0",
+      "discoveryInterval": 30000,
+      "seedPeers": [
+        {
+          "ip": "127.0.0.1",
+          "wsPort": 5000
+        },
+        {
+          "ip": "159.65.53.193",
+          "wsPort": 5000
+        }
+      ],
+      "blacklistedPeers": [],
+      "ackTimeout": 20000,
+      "connectTimeout": 5000,
+      "wsEngine": "ws",
+      "emitPeerLimit": 25
+    }
+  }
 }
