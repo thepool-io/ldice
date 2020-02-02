@@ -53,10 +53,6 @@ dblogs(){
 
 preparedb(){
   sudo -u postgres -i createuser --createdb $USER
-  sudo -u postgres -i createdb $network --owner $USER
-  sudo psql -d $network -c "alter user "$network" with password 'password';"
-  sudo -u postgres psql -d $network -c "alter user "$USER" with password 'password';"
-
   createdb $network --owner $USER
   psql -d $network -c "alter user "$USER" with password 'password';"
 }
@@ -80,6 +76,7 @@ setnet(){
 }
 
 fullpreqinstall(){
+  sudo apt update && apt upgrade -y
   sudo apt install -y libtool automake autoconf curl python-minimal build-essential moreutils jq screen
   sudo apt-get purge -y postgres* 
   sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'

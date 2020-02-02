@@ -9,6 +9,11 @@ su - ldice
 git clone https://github.com/thepool-io/ldice
 cd ldice
 bash ldice.sh fullpreqinstall
+```
+Log out from ldice user and log back in
+```sh
+su - ldice
+cd ldice
 npm install
 bash ldice.sh setnet ldice_testnet
 bash ldice.sh preparedb
