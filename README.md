@@ -7,17 +7,16 @@ adduser ldice
 usermod -aG sudo ldice
 su - ldice
 git clone https://github.com/thepool-io/ldice
-<<<<<<< HEAD
 cd ldice
-=======
-cd ldice/dapp-src
+bash ldice.sh fullpreqinstall
 npm install
-createdb lisk_test --owner lisk && psql -d lisk_test -c "alter user lisk with password 'password';"
-sudo node index.js | npx bunyan -o short
->>>>>>> c1a9e44ec38fbeea8c9e4f429466b82b8c95ebae
+bash ldice.sh setnet ldice_testnet
+bash ldice.sh preparedb
+bash ldice.sh start
+bash ldice.sh logs
 ```
 
-Usage
+Usage help
 ```sh
 #####################################
 >>>LDICE - Lisk Dice (LDT) Manager<<<
