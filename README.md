@@ -39,6 +39,7 @@ fullpreqinstall - Installs all dependencies, Ubuntu 18.04 tested.
 -Native token rights to profit, from the treasury revenue (dividends)<br>
 -Verify behaviour of undoAsset<br>
 -DEX integration<br>
+-Fail if asset.data empty<br>
 
 # Credits
 Corbifex | Moosty
