@@ -36,7 +36,7 @@ stop(){
 
 update(){
   git pull
-  npm-update
+  npm update
 }
 
 logs(){
