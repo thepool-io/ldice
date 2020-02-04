@@ -20,6 +20,7 @@ help_msg(){
   echo "purgedb - purges & recreates database"
   echo "readnet - reads current network"
   echo "setnet - sets network"
+  echo "update - updates repo and dependencies"
   echo "fullpreqinstall - Installs all dependencies, Ubuntu 18.04 tested."
   echo -e ""
 }
@@ -31,6 +32,11 @@ start(){
 
 stop(){
   screen -x ldice
+}
+
+update(){
+  git pull
+  npm-update
 }
 
 logs(){
@@ -108,6 +114,9 @@ case $1 in
     ;;
   "start")
       start
+    ;;
+  "update")
+      update
     ;;
   "stop")
       stop
