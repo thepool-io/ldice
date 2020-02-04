@@ -9,7 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "lisk-sdk": "3.0.1",
+    "lisk-sdk": "2.3.7",
     "prando": "5.1.1"
   }
 }
