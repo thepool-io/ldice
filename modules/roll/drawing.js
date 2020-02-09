@@ -1,5 +1,4 @@
 'use strict';
-const {BigNum} = require('lisk-sdk');
 const Prando = require('prando');
 const Draw = require('../../logic/draw.js');
 const treasuryAddress = "0L";
@@ -32,14 +31,14 @@ module.exports = ({components, channel, config}, logger) => {
         const drawResult = new Draw(blockHash,
                                 lastTransactions[i].signature,
                                 lastTransactions[i].asset.data,
-                                lastTransactions[i].amount).get();
+                                lastTransactions[i].asset.amount).get();
 
         //update gambler balance
-        let newBalance = new BigNum(gamblerAccount[0].balance);
+        let newBalance = BigInt(gamblerAccount[0].balance);
 
         //if bet won, add profit and return bet cost to the gambler
         if (drawResult.betWon) {
-          newBalance = newBalance.add(drawResult.totalProfit);
+          newBalance = newBalance+drawResult.totalProfit;
         }
 
         //Update account balance and bet results array
@@ -70,7 +69,7 @@ module.exports = ({components, channel, config}, logger) => {
         if (drawResult.betWon) {
           //read treasury account form db
           const treasuryAccount = await components.storage.entities.Account.get({address: treasuryAddress}, {extended: true, limit: 1});
-          const newTreasuryAccountBalance = new BigNum(treasuryAccount[0].balance).sub(drawResult.totalProfit).toString();
+          const newTreasuryAccountBalance = (BigInt(treasuryAccount[0].balance)-drawResult.totalProfit).toString();
           //save gambler to db
           components.storage.entities.Account.updateOne(
             {address: treasuryAddress},

@@ -12,7 +12,8 @@ help_msg(){
   echo -e "\033[1;31m>>>LDICE - Lisk Dice (LDT) Manager<<<\033[0m"
   echo -e "\033[1;31m#####################################\033[0m"
   echo -e "\033[0;32mMethods\033[0m"
-  echo "start - starts ldice node"
+  echo "start - starts ldice node in background"
+  echo "devstart - starts ldice node directly in session"
   echo "stop - stop ldice node. Ctrl+C to stop. Wait for graceful exit."
   echo "logs - prints current logs"
   echo "dblogs - prints current database logs"
@@ -28,6 +29,11 @@ help_msg(){
 start(){
   screen -dmS ldice node index.js
   echo -e "\033[0;32mNode started!\033[0m"
+}
+
+devstart(){
+  echo -e "\033[0;32mStarting Node!\033[0m"
+  node index.js | npx bunyan -o short
 }
 
 stop(){
@@ -114,6 +120,9 @@ case $1 in
     ;;
   "start")
       start
+    ;;
+  "devstart")
+      devstart
     ;;
   "update")
       update

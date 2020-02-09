@@ -1,16 +1,15 @@
 'use strict';
-const {BigNum} = require('lisk-sdk');
 
 module.exports = class Profit {
     constructor(betNumber, betAmount) {
-      this.betNumber = betNumber;
-      this.betAmount = new BigNum(betAmount);
+      this.betNumber = BigInt(betNumber);
+      this.betAmount = BigInt(betAmount);
     }
     get() {
-      let pureProfit = BigNum(this.betAmount.mul(new BigNum(100 - this.betNumber)).div(this.betNumber).add(this.betAmount).mul(990).div(1000).sub(this.betAmount));
-      //remove floating point, probably should be done differently, but BigNum lacks of this feature?
+      let pureProfit = this.betAmount*(BigInt(100)-this.betNumber)/this.betNumber+this.betAmount*BigInt(990)/BigInt(1000)-this.betAmount;
+      //remove floating point, probably should be done differently, but BigNum/BigInt lacks of this feature? CHECK AFTER BIGNUM->BigInt
       if (pureProfit.toString().includes(".")) {
-        pureProfit = new BigNum(pureProfit.toString().split(".")[0]);
+        pureProfit = BigInt(pureProfit.toString().split(".")[0]);
       }
       return pureProfit;
     }

@@ -1,121 +1,132 @@
 {
-  "version": 0,
-  "totalFee": "0",
-  "reward": "0",
+  "version": 2,
   "timestamp": 0,
-  "numberOfTransactions": 7,
-  "payloadLength": 904,
-  "previousBlock": null,
-  "payloadHash": "14417e1697fd4707cfeff86b9ee97888408a0aabd61cfb41070f4ab3ddcf2449",
+  "height": 1,
+  "maxHeightPreviouslyForged": 0,
+  "maxHeightPrevoted": 0,
+  "reward": "0",
+  "totalFee": "0",
+  "payloadLength": 1296,
+  "previousBlockId": null,
+  "communityIdentifier": "ldice",
+  "payloadHash": "304b5c4b96ff6ff1230689c25db983a63a077b91cc881d18042d1f333ba65662",
   "totalAmount": "505000000000000",
-  "generatorPublicKey": "23876d05c03fd4ba29c1efc1f7a5249db19ca4dc33c4df59088f4ee4b259774b",
+  "numberOfTransactions": 11,
+  "generatorPublicKey": "962501c753d9fa71e510299f666dd136acc94c3814263b1801379ea312d36f22",
   "transactions": [
     {
-      "id": "15187230913298515881",
-      "amount": "500000000000000",
-      "type": 0,
+      "id": "10448948458593539328",
+      "type": 8,
       "timestamp": 0,
-      "senderPublicKey": "23876d05c03fd4ba29c1efc1f7a5249db19ca4dc33c4df59088f4ee4b259774b",
-      "senderId": "3690561042129882905L",
-      "recipientId": "1693372163817076574L",
-      "fee": "0",
-      "signature": "05019ae92aba077e7cd93381f41999cbb39431bfdb724f215f6eef7edee2b6bebf88c2baa6c7c59a77cb4d1ef625d4de1e467ff94c99d3a70bf74b53f0b8600a",
-      "asset": {}
-    },
-    {
-      "id": "10886538893594375788",
-      "amount": "5000000000000",
-      "type": 0,
-      "timestamp": 0,
-      "senderPublicKey": "23876d05c03fd4ba29c1efc1f7a5249db19ca4dc33c4df59088f4ee4b259774b",
-      "senderId": "3690561042129882905L",
-      "recipientId": "0L",
-      "fee": "0",
-      "signature": "daae3e5458e1e5b4e112e62696d03126f5a8e803e3fbf245126f21f38f65300d984f4879708b94ad0ba4c4563aafaada922041975fa1a300e187de3dcb357208",
-      "asset": {}
-    },
-    {
-      "id": "1841192995744325749",
-      "amount": "0",
-      "type": 2,
-      "timestamp": 0,
-      "senderPublicKey": "031b1695c4b86f800d38268620c3161236b9f06dd39c8af9b3545792075a10ad",
-      "senderId": "3737145999253975606L",
-      "recipientId": null,
-      "fee": "0",
-      "signature": "eb1d7e7624a85d4f4887064820999917a654bd39a98f1c15c617efb8c04da936670d945f8094d703b359e35f2dae11c13e110def48175ddca434b1ffcff6730e",
+      "senderPublicKey": "962501c753d9fa71e510299f666dd136acc94c3814263b1801379ea312d36f22",
+      "signature": "4588bea1c830c4d4dc2384bb2deec73800fe1d7cdbef4a41b389b8876f2b4f5a302fda966d69f81c058d569167ec32abe0e543e5fbe8193de87f28d25c567e04",
       "asset": {
-        "delegate": {
-          "username": "goodboy_genesis_0"
-        }
+        "amount": "500000000000000",
+        "recipientId": "1693372163817076574L"
       }
     },
     {
-      "id": "8334804444335396783",
-      "amount": "0",
-      "type": 2,
+      "id": "8434253183780193825",
+      "type": 8,
       "timestamp": 0,
-      "senderPublicKey": "bb33fc1a19cfbda689f7941fffa34badf16e75348d6dd16833298f774d11f3bf",
-      "senderId": "9449847954655426588L",
-      "recipientId": null,
-      "fee": "0",
-      "signature": "c2e8d1efb1f7340b779cddc0f7441f79d4b0ba561b9ad07d4f0c2ec74d4ad08f1d494164b476e9c8147ff1548d532580f03d0b27e59f3c1a747086dbe5802c0d",
+      "senderPublicKey": "962501c753d9fa71e510299f666dd136acc94c3814263b1801379ea312d36f22",
+      "signature": "a345a52f552c1d5666d6ba0e731e8f8e04f0859ac3f55e706ac8f5e3cbbcc4efe7768faaf4954c5691f032d0513416493ae17b76b6cd2c9d52e5db0bf7ad5d04",
       "asset": {
-        "delegate": {
-          "username": "goodboy_genesis_1"
-        }
+        "amount": "5000000000000",
+        "recipientId": "0L"
       }
     },
     {
-      "id": "10793201449408601811",
-      "amount": "0",
-      "type": 2,
+      "id": "13910953870014809966",
+      "type": 10,
       "timestamp": 0,
-      "senderPublicKey": "0013bd00bf42a31be2962bc3c3bd3cd2872373ec863bc05ffa6e945da4254b83",
-      "senderId": "6780924215011625728L",
-      "recipientId": null,
-      "fee": "0",
-      "signature": "842a13d9338f31fac2ca9d81b06145f57619e4522a6c49438c1fe6aa9d3dddd9d2804861f7b1dcd4edc1d9855ae6a60c2d9e635fb2b00f62e824bf39e899ec0b",
+      "senderPublicKey": "94cc83676f6c611ead212151d4d17e5bd985d7e74705f362d4ee25184da875ee",
+      "signature": "fb6887e47d22317127ca7195e0c050e6b844ae0a5356bcd2a45859c5446b1fda733ed6a718c6b21b52a11588e3d7c2b83b3392206d37acf2010400f9d861fc07",
       "asset": {
-        "delegate": {
-          "username": "goodboy_genesis_2"
-        }
+        "username": "goodboy_genesis_0"
       }
     },
     {
-      "id": "666116900556948217",
-      "amount": "0",
-      "type": 2,
+      "id": "22301065214219175",
+      "type": 10,
       "timestamp": 0,
-      "senderPublicKey": "9117cfd3ba7da73c510fdf60f75ab369c7f3ac4ea38f79a7756b42c5efc9fa76",
-      "senderId": "18111747980964301429L",
-      "recipientId": null,
-      "fee": "0",
-      "signature": "fc454fa3592640543bc38d6f7d78e194dec34acd442814b5df1252cdf9e9b6ec7f531dd3754f947e65b0f4284a4482474136283a0f0bb8102a8943eeae2c4e06",
+      "senderPublicKey": "9b87a9af6494d8492a77b59ba4c969c996b76ca919f6f091bce805ede2f4db50",
+      "signature": "7931f8e84264dc5745e57825be12db063f5d5d469492f1cb31247d6a1e6fbfce8bbf7aff339ff78c536406ef43c5f3088bbc4c8705a4b083b46336491ce9100e",
       "asset": {
-        "delegate": {
-          "username": "goodboy_genesis_3"
-        }
+        "username": "goodboy_genesis_1"
       }
     },
     {
-      "id": "4574232257878817370",
-      "amount": "0",
-      "type": 2,
+      "id": "8180811511835380815",
+      "type": 10,
       "timestamp": 0,
-      "senderPublicKey": "b35887abdfe7b7b5a2b73891b919f90b5030fa31d344db88933a1f668e88cfc9",
-      "senderId": "8738419690211051022L",
-      "recipientId": null,
-      "fee": "0",
-      "signature": "fa312019051ecc89b8109324a7961aa72afb2c5fb53ab8d014a52ed769a02c231f8dd612b9ba5f911d54b532864306c722f27ff8ee91277189eac1abbcf9ef09",
+      "senderPublicKey": "a65e1ec76701aff9fc3945fb7307f3cd5be8e161a8b0534a23e740f9f8b050c9",
+      "signature": "03267007f1d2cd4e8fdb1f4e7d6f3ae09b947d627136386d8d5506b5f9ddb62ab59f65dad861e4e2059e7742c77e2fbea489c7899b5691bdbf2a45f70253f106",
       "asset": {
-        "delegate": {
-          "username": "goodboy_genesis_4"
-        }
+        "username": "goodboy_genesis_2"
+      }
+    },
+    {
+      "id": "10995784447606649919",
+      "type": 10,
+      "timestamp": 0,
+      "senderPublicKey": "7b207aabce0a68ccbcdfe43d67689bb31dfe9f3f443f6ea405da19ce1069a01b",
+      "signature": "9f4b8a5e12bf7a0de0fe88cc240b1a9dafe5cc211f782ae800e4fce7fe910459d0b22e3411e91c6fd490c09112c2a37f9668ef6a8619fce2ac53ea4eb1f5e401",
+      "asset": {
+        "username": "goodboy_genesis_3"
+      }
+    },
+    {
+      "id": "5616044065914185341",
+      "type": 10,
+      "timestamp": 0,
+      "senderPublicKey": "dea2ad63c9643b6eaf8a51c7634d8d183f9ee399ce6f26e73b3814a4773de063",
+      "signature": "d7ce95fceb98e419f5adb52a393ec17548ca248f923c9c89f57707af0052c1d6c7244d23d29566370964aa8a52ebe127ef1ded927ad2f69ab9c3023442ae6b08",
+      "asset": {
+        "username": "goodboy_genesis_4"
+      }
+    },
+    {
+      "id": "17885495924198250691",
+      "type": 10,
+      "timestamp": 0,
+      "senderPublicKey": "be91c5c0fe60b111ce8956db89320cc0b1c22c7f96a65bb3c602d33303f2554c",
+      "signature": "9a04b50d965a18479bdf5dcb065418e63ad0ce94a04d022d88524eae0bd1a16d710a09c4a98a1e96767bcff37237b8159ffa5fb23047615c8c003e061625cc0a",
+      "asset": {
+        "username": "goodboy_genesis_5"
+      }
+    },
+    {
+      "id": "7380868284689618193",
+      "type": 10,
+      "timestamp": 0,
+      "senderPublicKey": "d7b5f998b5b8162296f8356c7f9dd04efcc6a97934128de457a1aaeb7da209f8",
+      "signature": "cd51673af711f69264582f9139ebac019e347bd6fe863ba74283f9fc1a9ce96e28841a9edd47715144c07710c9439847edf2df47295ca241797ab9039d139102",
+      "asset": {
+        "username": "goodboy_genesis_6"
+      }
+    },
+    {
+      "id": "4201991993123374967",
+      "type": 10,
+      "timestamp": 0,
+      "senderPublicKey": "e1c54768737024179d3b0a2ea8b7b2950aac0d8a0a71c1ebade1481fb8f3ba3d",
+      "signature": "ed3b8e9d7676ee9ee1b22b45cbec9476724e45da2c8963bd6a063d91def8edbd6117726b965667ea3d5328db04d4f52657b63e1b6960958ae0629d1f26aced0d",
+      "asset": {
+        "username": "goodboy_genesis_7"
+      }
+    },
+    {
+      "id": "11813533432440561783",
+      "type": 10,
+      "timestamp": 0,
+      "senderPublicKey": "c6f90c4d3298dd44d229f6c61676c9bc623c4e83c110a81b91f8dfc31f321230",
+      "signature": "cbe2d9fbc9374306e52164889689fb2e307a0b017e85881e5db86f794586e2056e24499bf97b7f3563177c18c3f0c93483b5730768f1f183ac63f1a15e579409",
+      "asset": {
+        "username": "goodboy_genesis_8"
       }
     }
   ],
-  "height": 1,
-  "blockSignature": "fc91d648dfe5ba2322779f223e79ccb1ca3e55901b36ef1cfb8bc44e98b7b849189dd2ebaf6a9c9125fb8b809c7c2c939bd5e7c99034c0d98d4f60f3708c6405",
-  "id": "1222192664868467866"
+  "blockSignature": "1cd70ca55eb38855d8d06646507008e4247399448d4410d4b6d29bd4ac9ebeac05d56a2e99b977970040103296e2f6bcfcc539d5dd996979387f6ef6e1fc900a",
+  "id": "6802444421827091689"
 }

@@ -1,10 +1,7 @@
 'use strict';
-const {
-    transactions: { BaseTransaction },
-    TransactionError,
-    BigNum,
-} = require('lisk-sdk');
-const {utils} = require("@liskhq/lisk-transactions");
+const {transactions: { BaseTransaction }} = require('lisk-sdk');
+const {utils, TransactionError} = require("@liskhq/lisk-transactions");
+const {isValidTransferAmount} = require("@liskhq/lisk-validator");
 const Profit = require('../logic/profit.js');
 
 class BetTransaction extends BaseTransaction {
@@ -20,7 +17,7 @@ class BetTransaction extends BaseTransaction {
                 address: this.senderId,
             },
             {
-                address: this.recipientId,
+                address: this.asset.recipientId,
             },
         ]);
     }
@@ -38,51 +35,56 @@ class BetTransaction extends BaseTransaction {
     }
     validateAsset() {
         const errors = [];
-        if (!utils.validateTransferAmount(this.amount.toString())) {
+
+        if (!isValidTransferAmount(this.asset.amount.toString())) {
             errors.push(
                 new TransactionError(
-                    'Amount must be a valid number in string format.',
+                    'Invalid asset.amount',
                     this.id,
-                    '.amount',
-                    this.amount.toString(),
+                    '->',
+                    this.asset.amount.toString(),
+                    "Valid number as string"
                 ),
             );
         }
-        if (this.recipientId !== "0L") {
+
+        if (this.asset.recipientId !== "0L") {
             errors.push(
                 new TransactionError(
                     '`recipientId` must be treasury.',
                     this.id,
-                    '.recipientId',
+                    '->',
+                    this.asset.recipientId,
+                    'Must be 0L',
                 ),
             );
         }
+
         if (parseInt(this.asset.data) < 2 && parseInt(this.asset.data) > 99) {
             errors.push(
                 new TransactionError(
-                    '`bet_number` must be between 2 and 99.',
+                    'Invalid data.bet_number',
                     this.id,
-                    '.bet_number',
+                    '->',
                     this.asset.data,
+                    'Must be in range of 2 to 99',
                 ),
             );
         }
-        //check if bet amount meets minimum size requirement
-        const viableBetAmount = new BigNum(this.amount).cmp(BigNum(10000000));//min bet size = 0.1
-        if (viableBetAmount < 0) {
+        
+        //check if bet amount meets minimum size requirement (0.1)
+        const MinimumBetSize = BigInt(10000000);
+        if (MinimumBetSize >= BigInt(this.asset.amount)) {
             errors.push(
                 new TransactionError(
-                    'minimum bet is 0.1 LSK',
+                    'Bet amount too low',
                     this.id,
-                    'amount:',
-                    this.amount,
+                    '->',
+                    this.asset.amount,
+                    MinimumBetSize.toString(),
                 ),
             );
         }
-        /*
-        TODO
-        -Check all error messages when fixed in lisk-sdk
-        */
         return errors;
     }
     applyAsset(store) {
@@ -95,7 +97,7 @@ class BetTransaction extends BaseTransaction {
         const balanceError = utils.verifyAmountBalance(
             this.id,
             sender,
-            this.amount,
+            this.asset.amount,
             this.fee,
         );
         if (balanceError) {
@@ -103,22 +105,20 @@ class BetTransaction extends BaseTransaction {
         }
 
         //read recipient or get default
-        const recipient = store.account.getOrDefault(this.recipientId);
+        const recipient = store.account.getOrDefault(this.asset.recipientId);
 
         //calculate possible profit
-        const pureProfit = new Profit(parseInt(this.asset.data-1),this.amount).get();
+        const pureProfit = new Profit(parseInt(this.asset.data-1),this.asset.amount).get();
 
         //get current max profit
-        const currentMaxProfit = new BigNum(recipient.balance).div(100);//max profit = 0.01 of treasury
+        const currentMaxProfit = BigInt(recipient.balance)/BigInt(100);//max profit = 0.01 of treasury
 
         //check if pureProfit lower than max profit
-        const viableProfit = currentMaxProfit.cmp(pureProfit);
-        if (viableProfit >= 0) {
+        if (currentMaxProfit > pureProfit) {
             //check if sender has enough balance
-            const viableSenderBalance = new BigNum(sender.balance).cmp(BigNum(this.amount));
-            if (viableSenderBalance >= 0) {
+            if (BigInt(sender.balance) >= BigInt(this.asset.amount)) {
                 //subtract amount from sender
-                const updatedSenderBalance = new BigNum(sender.balance).sub(BigNum(this.amount));
+                const updatedSenderBalance = BigInt(sender.balance)-BigInt(this.asset.amount);
 
                 //prepare updated sender
                 const updatedSender = {
@@ -130,39 +130,37 @@ class BetTransaction extends BaseTransaction {
                 store.account.set(updatedSender.address, updatedSender);
 
                 //add balance to recipient (treasury)
-                const updatedRecipientBalance = new BigNum(recipient.balance).add(
-                    this.amount,
-                );
+                const updatedRecipientBalance = BigInt(recipient.balance)+BigInt(this.asset.amount);
 
                 //prepare updated recipient
                 const updatedRecipient = {
                     ...recipient,
                     balance: updatedRecipientBalance.toString(),
                 };
-
                 //save recipient to db
                 store.account.set(updatedRecipient.address, updatedRecipient);
             } else {
                 errors.push(
                     new TransactionError(
-                        'sender has not enough balance',
+                        'Sender has not enough balance',
+                        this.id,
+                        '->',
                         sender.balance,
-                        '/',
-                        this.amount,
+                        this.asset.amount,
                     ),
                 );
             }
         } else {
             errors.push(
                 new TransactionError(
-                    'max profit reached (decrease bet amount or increase probability)->',
-                    pureProfit,
-                    '/',
-                    currentMaxProfit,
+                    'Max profit reached',
+                    this.id,
+                    'Treasury:'+recipient.balance+' Bet: '+this.asset.amount,
+                    pureProfit.toString(),
+                    currentMaxProfit.toString(),
                 ),
             );
         }
-
         return errors;
     }
     undoAsset(store) {
@@ -175,7 +173,7 @@ class BetTransaction extends BaseTransaction {
         const bet_result = sender.asset.transaction_results[this.id];
 
         //return bet value to sender
-        const updatedSenderBalance = new BigNum(sender.balance).sub(bet_result.profit);
+        const updatedSenderBalance = BigInt(sender.balance)-BigInt(bet_result.profit);
 
         //prepare new sender
         const updatedSender = {
@@ -187,18 +185,16 @@ class BetTransaction extends BaseTransaction {
         store.account.set(updatedSender.address, updatedSender);
 
         //read recipient (treasury)
-        const recipient = store.account.getOrDefault(this.recipientId);
+        const recipient = store.account.getOrDefault(this.asset.recipientId);
 
         //verify amount
-        const balanceError = verifyBalance(this.id, recipient, this.amount);
+        const balanceError = verifyBalance(this.id, recipient, this.asset.amount);
         if (balanceError) {
             errors.push(balanceError);
         }
 
         //deduce bet amount from recipient (treasury)
-        const updatedRecipientBalance = new BigNum(recipient.balance).sub(
-            this.amount,
-        );
+        const updatedRecipientBalance = BigInt(recipient.balance)-BigInt(this.asset.amount);
 
         //prepare new recipient (treasury)
         const updatedRecipient = {
