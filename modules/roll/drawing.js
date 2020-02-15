@@ -48,7 +48,7 @@ module.exports = ({components, channel, config}, logger) => {
             ...gamblerAccount[0].asset.transaction_results || [],
             {
               [lastTransactions[i].id]:
-                { //these are not necessary to store as bet result can be recreated from blockHash+txHash, however perhaps it’s better for user readability and traceability
+                { //these are necessary to store only to enable undoAsset to properly unwind transactions
                   bet_number: lastTransactions[i].asset.data,
                   profit: drawResult.totalProfit.toString(),
                   rolled_number: drawResult.rolledNumber
