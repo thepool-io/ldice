@@ -79,7 +79,10 @@ module.exports = ({components, channel, config}, logger) => {
         }
 
         //print log
-        logger.info(`Bet id: ${lastTransactions[i].id} profit: ${drawResult.totalProfit} bet: ${drawResult.betNumber} rolled: ${drawResult.rolledNumber}`);
+        logger.info(`Bet id: ${lastTransactions[i].id} profit: ${drawResult.totalProfit.toString()} bet: ${drawResult.betNumber.toString()} rolled: ${drawResult.rolledNumber.toString()}`);
+
+        //emit new confirmed bet event
+        channel.publish('drawing:newbet', {id: lastTransactions[i].id, profit: drawResult.totalProfit.toString(), bet: drawResult.betNumber.toString(), rolled: drawResult.rolledNumber.toString()});
       }
     }
   });

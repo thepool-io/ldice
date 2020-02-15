@@ -41,7 +41,9 @@ class RollModule extends BaseModule {
   }
 
   get events() {
-    return [];
+    return [
+      'newbet',
+    ];
   }
 
   get actions() {
