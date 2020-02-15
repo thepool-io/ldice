@@ -1,14 +1,14 @@
 {
   "app": {
     "label": "ldice",
-    "minVersion": "0.0.6",
-    "version": "0.0.6",
+    "minVersion": "0.1.1",
+    "version": "0.1.1",
     "protocolVersion": "1.1",
     "ipc": {
       "enabled": true
     },
     "genesisConfig": {
-      "EPOCH_TIME": "2019-04-24T17:00:00.000Z",
+      "EPOCH_TIME": "2020-02-11T17:00:00.000Z",
       "BLOCK_TIME": 5,
       "MAX_TRANSACTIONS_PER_BLOCK": 25,
       "REWARDS": {
@@ -98,9 +98,10 @@
     },
     "chain": {
       "forging": {
-        "force": false,
-        "delegates": [],
-        "defaultPassword": "123"
+        "force": true,
+        "delegates": [
+      ],
+        "defaultPassword": "passphrase"
       },
       "broadcasts": {
         "active": true,
@@ -146,10 +147,6 @@
       "seedPeers": [
         {
           "ip": "127.0.0.1",
-          "wsPort": 5000
-        },
-        {
-          "ip": "159.65.53.193",
           "wsPort": 5000
         }
       ],

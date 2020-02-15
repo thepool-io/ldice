@@ -14,9 +14,9 @@
 
 'use strict';
 
-const {createLoggerComponent} = require('lisk-framework/src/components/logger');
-const {createStorageComponent} = require('lisk-framework/src/components/storage');
-const {bootstrapStorage} = require('./init_steps');
+const { createLoggerComponent } = require('lisk-framework/src/components/logger');
+const { createStorageComponent } = require('lisk-framework/src/components/storage');
+const { BSCustomStorage } = require('../../cstorage/init');
 const drawing = require('./drawing.js');
 
 module.exports = class Drawing {
@@ -32,45 +32,26 @@ module.exports = class Drawing {
 
   async bootstrap() {
     global.constants = this.options.constants;
+
     // Logger
-    const loggerConfig = await this.channel.invoke(
-      'app:getComponentConfig',
-      'logger',
-    );
-    this.logger = createLoggerComponent({
-      ...loggerConfig,
-      module: 'drawing',
-    });
+    const loggerConfig = await this.channel.invoke('app:getComponentConfig','logger');
+    this.logger = createLoggerComponent({...loggerConfig,module: 'drawing'});
+
     //Storage
     this.logger.debug('Initiating storage...');
-    const storageConfig = await this.channel.invoke(
-      'app:getComponentConfig',
-      'storage',
-    );
-    const dbLogger =
-      storageConfig.logFileName &&
-      storageConfig.logFileName === loggerConfig.logFileName
-        ? this.logger
-        : createLoggerComponent({
-          ...loggerConfig,
-          logFileName: storageConfig.logFileName,
-          module: 'drawing:database',
-        });
+    const storageConfig = await this.channel.invoke('app:getComponentConfig','storage');
+    const dbLogger = storageConfig.logFileName && storageConfig.logFileName === loggerConfig.logFileName ? this.logger: createLoggerComponent({...loggerConfig,logFileName: storageConfig.logFileName,module: 'drawing:database'});
     const storage = createStorageComponent(storageConfig, dbLogger);
-    const applicationState = await this.channel.invoke(
-      'app:getApplicationState',
-    );
+    const applicationState = await this.channel.invoke('app:getApplicationState');
+
     //Setup scope
-    this.scope = {
-      components: {
-        logger: this.logger,
-        storage,
-      },
-      channel: this.channel,
-      config: this.options,
-      applicationState,
-    };
-    await bootstrapStorage(this.scope, global.constants.ACTIVE_DELEGATES);
+    this.scope = {components: {logger: this.logger,storage},channel: this.channel,config: this.options,applicationState};
+
+    //Init custom storage
+    this.logger.debug('Initiating BSCustomStorage for Drawing module');
+    await BSCustomStorage(this.scope, global.constants.ACTIVE_DELEGATES);
+
+    //Init drawing module
     drawing(this.scope, this.logger);
   }
 

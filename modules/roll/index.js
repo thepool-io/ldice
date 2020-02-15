@@ -14,8 +14,8 @@
 
 'use strict';
 
-const Drawing = require('./moduleBase');
 const BaseModule = require('lisk-framework/src/modules/base_module');
+const Drawing = require('./moduleBase');
 
 class RollModule extends BaseModule {
   constructor(options) {
