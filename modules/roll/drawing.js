@@ -66,10 +66,11 @@ module.exports = ({components, channel, config}, logger) => {
         });
 
         //if bet is won, balance must be deduced from treasuryAccount, if lost - balance already taken
+        var newTreasuryAccountBalance = "na";
         if (drawResult.betWon) {
           //read treasury account form db
           const treasuryAccount = await components.storage.entities.Account.get({address: treasuryAddress}, {extended: true, limit: 1});
-          const newTreasuryAccountBalance = (BigInt(treasuryAccount[0].balance)-drawResult.totalProfit).toString();
+          newTreasuryAccountBalance = (BigInt(treasuryAccount[0].balance)-drawResult.totalProfit).toString();
           //save gambler to db
           components.storage.entities.Account.updateOne(
             {address: treasuryAddress},
@@ -82,7 +83,7 @@ module.exports = ({components, channel, config}, logger) => {
         logger.info(`Bet id: ${lastTransactions[i].id} profit: ${drawResult.totalProfit.toString()} bet: ${drawResult.betNumber.toString()} rolled: ${drawResult.rolledNumber.toString()}`);
 
         //emit new confirmed bet event
-        channel.publish('drawing:newbet', {id: lastTransactions[i].id, profit: drawResult.totalProfit.toString(), bet: drawResult.betNumber.toString(), rolled: drawResult.rolledNumber.toString()});
+        channel.publish('drawing:newbet', {id: lastTransactions[i].id, senderId: gambler, senderBalanceAfter: newBalance.toString(), treasuryBalanceAfter: newTreasuryAccountBalance.toString(), profit: drawResult.totalProfit.toString(), bet: drawResult.betNumber.toString(), rolled: drawResult.rolledNumber.toString()});
       }
     }
   });
