@@ -120,10 +120,28 @@ class BetTransaction extends BaseTransaction {
                 //subtract amount from sender
                 const updatedSenderBalance = BigInt(sender.balance)-BigInt(this.asset.amount);
 
+                //update total stats
+                var updatedSenderTotalBets = BigInt(1);
+                if (sender.asset.stats !== undefined) {
+                    if (sender.asset.stats.total !== undefined) {
+                        updatedSenderTotalBets = BigInt(sender.asset.stats.total)+BigInt(1);
+                    }
+                }
+
+                //prepare updatedAsset
+                const updatedAsset = {
+                    ...sender.asset,
+                    stats: {
+                        ...sender.asset.stats,
+                        total: updatedSenderTotalBets.toString(),
+                    },
+                };
+
                 //prepare updated sender
                 const updatedSender = {
                     ...sender,
                     balance: updatedSenderBalance.toString(),
+                    asset: updatedAsset,
                 };
 
                 //save sender to db
@@ -175,10 +193,52 @@ class BetTransaction extends BaseTransaction {
         //return bet value to sender
         const updatedSenderBalance = BigInt(sender.balance)-BigInt(bet_result.profit);
 
+        //update total stats
+        const updatedSenderTotalBets = BigInt(sender.asset.stats.total)-BigInt(1);
+
+        //update total profit
+        const updatedSenderTotalProfit = BigInt(sender.asset.stats.profit)-BigInt(bet_result.profit);
+
+        //read and store lost stats
+        var updatedGamblerLostBets = BigInt(0);
+        if (sender.asset.stats !== undefined) { //need to check if it exists, because it may not yet exist
+            if (sender.asset.stats.lost !== undefined) {
+                updatedGamblerLostBets = BigInt(sender.asset.stats.lost);
+            }
+        }
+
+        //read and store won stats
+        var updatedGamblerWonBets = BigInt(0);
+        if (sender.asset.stats !== undefined) { //need to check if it exists, because it may not yet exist
+            if (sender.asset.stats.won !== undefined) {
+                updatedGamblerWonBets = BigInt(sender.asset.stats.won);
+            }
+        }
+
+        //revert bet stats count
+        if (bet_result.profit.includes("-")) {
+            updatedGamblerLostBets = updatedGamblerLostBets - 1;
+        } else {
+            updatedGamblerWonBets = updatedGamblerWonBets - 1;
+        }
+
+        //prepare updatedAsset
+        const updatedAsset = {
+            ...sender.asset,
+            stats: {
+                ...sender.asset.stats,
+                total: updatedSenderTotalBets.toString(),
+                profit: updatedSenderTotalProfit.toString(),
+                lost: updatedGamblerLostBets.toString(),
+                won: updatedGamblerWonBets.toString(),
+            },
+        };
+
         //prepare new sender
         const updatedSender = {
             ...sender,
             balance: updatedSenderBalance.toString(),
+            asset: updatedAsset,
         };
 
         //save updated sender to db
