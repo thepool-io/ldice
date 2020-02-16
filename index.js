@@ -2,6 +2,7 @@ const {Application} = require('lisk-sdk');
 const fs = require("fs");
 const BetTransaction = require('./actions/bet');
 const RollModule = require('./modules/roll');
+const WebSocketModule = require('./modules/websocket');
 const dappGenesis = require('./genesis.json');
 let dappConfig;
 
@@ -25,6 +26,7 @@ app.constants = {
 }
 
 app.registerModule(RollModule, { blockHashDistance: 1 });
+app.registerModule(WebSocketModule);
 app.registerTransaction(BetTransaction);
 
 app.run().then(() => app.logger.info('App started...')).catch(error => {

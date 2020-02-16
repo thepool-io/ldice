@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "lisk-sdk": "3.0.2",
-    "prando": "5.1.1"
+    "prando": "5.1.1",
+    "socket.io": "2.3.0"
   }
 }
