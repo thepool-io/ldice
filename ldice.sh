@@ -14,6 +14,7 @@ help_msg(){
   echo -e "\033[0;32mMethods\033[0m"
   echo "start - starts ldice node in background"
   echo "devstart - starts ldice node directly in session"
+  echo "devstartraw - starts ldice node directly in session without npx bunyan"
   echo "stop - stop ldice node. Ctrl+C to stop. Wait for graceful exit."
   echo "logs - prints current logs"
   echo "dblogs - prints current database logs"
@@ -34,6 +35,11 @@ start(){
 devstart(){
   echo -e "\033[0;32mStarting Node!\033[0m"
   node index.js | npx bunyan -o short
+}
+
+devstartraw(){
+  echo -e "\033[0;32mStarting Node!\033[0m"
+  node index.js
 }
 
 stop(){
@@ -123,6 +129,9 @@ case $1 in
     ;;
   "devstart")
       devstart
+    ;;
+  "devstartraw")
+      devstartraw
     ;;
   "update")
       update
