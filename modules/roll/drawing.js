@@ -17,6 +17,9 @@ module.exports = ({components, channel, config}, logger) => {
     const lastTransactions = await components.storage.entities.Transaction.get(
       {blockId: lastBlocks[config.blockHashDistance - 1].id, type: 1001}, {extended: true, limit: 25});
 
+    // Get height of currently processed bets
+    const BlockHeight = lastBlocks[config.blockHashDistance - 1].height;
+
     var ConsistencyCheckArray = Array();
 
     if (lastTransactions.length > 0) {
@@ -71,17 +74,60 @@ module.exports = ({components, channel, config}, logger) => {
           }
         }
 
+        /*
+        Remove old account.asset.transaction_results *experimental*
+        Results are deterministic, there is no need to store results, however it is necessary
+        because undoAsset has limited database access and the only way to reverse transactions properly
+        is to store them in account.asset, however above 1000 transactions per account there is significant
+        performance drop. It can be assumed that there is no need to rollback (use undoAsset) after N blocks,
+        especially with BFT finality. It might work as workaround in current situation. Whilst lisk-hq is working
+        on expanding database access for custom transactions and/or add block logic extensibility. 
+        */
+        const SafeBFTFinality = 175; //It is not fixed, but it has some few additional blocks.
+        const NumberOfTransactionsAllowedInAccountAsset = 50; //Assuming they are old, it can be more.
+        if (gamblerAccount[0].asset.transaction_results) {
+          const NumberOfBetsStored = gamblerAccount[0].asset.transaction_results.length;
+          var NewArrayOfTransactionResults = Array();
+          if (NumberOfBetsStored > NumberOfTransactionsAllowedInAccountAsset) {
+            for (let key in gamblerAccount[0].asset.transaction_results) {
+              const object =  gamblerAccount[0].asset.transaction_results[key];
+              const betId = Object.keys(object)[0];
+              const betIdObject = object[betId];
+              const heightMaturity = BlockHeight - betIdObject.atHeight
+              if (heightMaturity > SafeBFTFinality) {
+                logger.info(`Removing mature bet with key:${key} betId:${betId} heightMaturity:${heightMaturity}`);
+              } else {
+                NewArrayOfTransactionResults = [...NewArrayOfTransactionResults || [],
+                  {
+                    [betId]:
+                      {
+                        bet_number: betIdObject.bet_number,
+                        profit: betIdObject.profit,
+                        rolled_number: betIdObject.rolled_number,
+                        atHeight: betIdObject.atHeight,
+                      }
+                  }
+                ]
+              }
+            }
+            logger.info(`Number of old bets stored after cleaning:${NewArrayOfTransactionResults.length}/${NumberOfBetsStored}`);
+          } else { 
+            NewArrayOfTransactionResults = gamblerAccount[0].asset.transaction_results;
+          }
+        }
+
         //Update account balance and bet results array
         const betResults = {
           ...gamblerAccount[0].asset,
           transaction_results: [
-            ...gamblerAccount[0].asset.transaction_results || [],
+            ...NewArrayOfTransactionResults || [],
             {
               [lastTransactions[i].id]:
                 { //these are necessary to store only to enable undoAsset to properly unwind transactions
                   bet_number: lastTransactions[i].asset.data,
                   profit: drawResult.totalProfit.toString(),
-                  rolled_number: drawResult.rolledNumber
+                  rolled_number: drawResult.rolledNumber,
+                  atHeight: BlockHeight,
                 }
             }
           ],
@@ -125,7 +171,7 @@ module.exports = ({components, channel, config}, logger) => {
         }
 
         //print log
-        logger.info(`Bet id:${lastTransactions[i].id} profit:${drawResult.totalProfit.toString()} bet:${drawResult.betNumber.toString()} rolled:${drawResult.rolledNumber.toString()} isWon:${drawResult.betWon} won:${updatedGamblerWonBets} lost:${updatedGamblerLostBets} total:${gamblerAccount[0].asset.stats.total}`);
+        logger.info(`Bet id:${lastTransactions[i].id} profit:${drawResult.totalProfit.toString()} bet:${drawResult.betNumber.toString()} rolled:${drawResult.rolledNumber.toString()} isWon:${drawResult.betWon} won:${updatedGamblerWonBets} lost:${updatedGamblerLostBets} total:${gamblerAccount[0].asset.stats.total} atHeight:${BlockHeight}`);
 
         //emit new confirmed bet event
         channel.publish('drawing:newbet', {id: lastTransactions[i].id, senderId: gambler, senderBalanceAfter: newBalance.toString(), treasuryBalanceAfter: newTreasuryAccountBalance.toString(), profit: drawResult.totalProfit.toString(), bet: drawResult.betNumber.toString(), rolled: drawResult.rolledNumber.toString()});
