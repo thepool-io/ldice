@@ -67,7 +67,7 @@ module.exports = ({components, channel, config}, logger) => {
         var updatedTotalProfit = BigInt(0);
         if (gamblerAccount[0].asset.stats !== undefined) {
           if (gamblerAccount[0].asset.stats.profit !== undefined) {
-            updatedTotalProfit = BigInt(gamblerAccount[0].asset.stats.profit)+drawResult.totalProfit;
+            updatedTotalProfit = BigInt(gamblerAccount[0].asset.stats.profit)+drawResult.pureProfit;
           }
         }
 
@@ -140,11 +140,11 @@ module.exports = ({components, channel, config}, logger) => {
       TotalOfWonAndLost =  TotalOfWonAndLost + BigInt(value.wonAndLost);
       if (BigInt(value.total)!=BigInt(value.wonAndLost)) {
         console.log(ConsistencyCheckArray);
-        logger.fatal(`Block:${lastBlocks[config.blockHashDistance - 1].id} - Inconsistency occurred. This should NOT happen. Closing to investigate.`);
-        process.exit(1);
+        logger.error(`Block:${lastBlocks[config.blockHashDistance - 1].id} - Inconsistency occurred. This should NOT happen. Closing to investigate.`);
+        //process.exit(1); - exit disabled for now to fully understand consistency issue
       }
     }
-    logger.info(`Block:${lastBlocks[config.blockHashDistance - 1].id} is consistent. ${TotalOfWonAndLost}/${TotalOfTotal}`);
+    logger.info(`Block:${lastBlocks[config.blockHashDistance - 1].id} fully processed. Consistency:${TotalOfWonAndLost}/${TotalOfTotal}`);
     ConsistencyCheckArray = Array();
   });
 };
