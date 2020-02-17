@@ -33,6 +33,7 @@ module.exports = class Draw {
         } else {
           //deduce cost of bet
           totalProfit = BigInt(-betAmount);
+          pureProfit = BigInt(-betAmount);
           betWon = false;
         }
         return {totalProfit: totalProfit, pureProfit: pureProfit, rolledNumber: rolledNumber, betNumber: betNumber, betWon: betWon};
