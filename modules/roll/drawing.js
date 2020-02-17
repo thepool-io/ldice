@@ -21,6 +21,7 @@ module.exports = ({components, channel, config}, logger) => {
     const BlockHeight = lastBlocks[config.blockHashDistance - 1].height;
 
     var ConsistencyCheckArray = Array();
+    var GamblersArray = Array();
 
     if (lastTransactions.length > 0) {
       // Loop through transactions
@@ -28,9 +29,17 @@ module.exports = ({components, channel, config}, logger) => {
         //Get gambler account id
         const gambler = lastTransactions[i].senderId;
 
-        //Read gambler account from db
-        const gamblerAccount = await components.storage.entities.Account.get(
+        //Prepare gamblerAccount object
+        var gamblerAccount = [];
+
+        //Read gambler from db only once if many bets
+        if (!GamblersArray[gambler]) {
+          gamblerAccount = await components.storage.entities.Account.get(
           {address: gambler}, {extended: true, limit: 1});
+          GamblersArray[gambler] = gamblerAccount;
+        } else {
+          gamblerAccount = GamblersArray[gambler];
+        }
 
         //draw
         const drawResult = new Draw(blockHash,
@@ -139,13 +148,9 @@ module.exports = ({components, channel, config}, logger) => {
           },
         };
 
-        //save gambler to db
-        await components.storage.entities.Account.updateOne(
-          {address: gambler},
-          {
-            balance: newBalance.toString(),
-            asset: betResults
-        });
+        //save bet results to gambler temp state
+        GamblersArray[gambler][0].balance = newBalance.toString();
+        GamblersArray[gambler][0].asset = betResults;
 
         //if bet is won, balance must be deduced from treasuryAccount, if lost - balance already taken
         var newTreasuryAccountBalance = "na";
@@ -175,6 +180,17 @@ module.exports = ({components, channel, config}, logger) => {
 
         //emit new confirmed bet event
         channel.publish('drawing:newbet', {id: lastTransactions[i].id, senderId: gambler, senderBalanceAfter: newBalance.toString(), treasuryBalanceAfter: newTreasuryAccountBalance.toString(), profit: drawResult.totalProfit.toString(), bet: drawResult.betNumber.toString(), rolled: drawResult.rolledNumber.toString()});
+      }
+      //Save db state for each gambler
+      for (let gambler in GamblersArray) {
+        let gamblerObject =  GamblersArray[gambler];
+        logger.info(`Saving db state for:${gambler}`);
+        await components.storage.entities.Account.updateOne(
+          {address: gambler},
+          {
+            balance: gamblerObject[0].balance,
+            asset: gamblerObject[0].asset,
+        });
       }
     }
     //Consistency check
