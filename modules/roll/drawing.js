@@ -83,7 +83,7 @@ module.exports = ({components, channel, config}, logger) => {
         especially with BFT finality. It might work as workaround in current situation. Whilst lisk-hq is working
         on expanding database access for custom transactions and/or add block logic extensibility. 
         */
-        const SafeBFTFinality = 175; //It is not fixed, but it has some few additional blocks.
+        const SafeBFTFinality = 134; //Finality 67*2 - 12tx per block * 134 = max ~1.6k tx stored in account.asset
         const NumberOfTransactionsAllowedInAccountAsset = 50; //Assuming they are old, it can be more.
         if (gamblerAccount[0].asset.transaction_results) {
           const NumberOfBetsStored = gamblerAccount[0].asset.transaction_results.length;
