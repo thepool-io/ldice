@@ -148,7 +148,7 @@ class BetTransaction extends BaseTransaction {
                 store.account.set(updatedSender.address, updatedSender);
 
                 //DEBUG
-                //console.log(`applyAsset:${this.id} -> ${updatedSenderTotalBets.toString()}`);
+                console.log(`applyAsset:${this.id} -> ${updatedSenderTotalBets.toString()}`);
 
                 //add balance to recipient (treasury)
                 const updatedRecipientBalance = BigInt(recipient.balance)+BigInt(this.asset.amount);
@@ -248,7 +248,7 @@ class BetTransaction extends BaseTransaction {
         store.account.set(updatedSender.address, updatedSender);
 
         //DEBUG
-        //console.log(`undoAsset:${this.id} -> ${updatedSenderTotalBets.toString()}`);
+        console.log(`undoAsset:${this.id} -> ${updatedSenderTotalBets.toString()}`);
 
         //read recipient (treasury)
         const recipient = store.account.getOrDefault(this.asset.recipientId);
