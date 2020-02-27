@@ -36,10 +36,8 @@ fullpreqinstall - Installs all dependencies, Ubuntu 18.04 tested.
 ```
 
 # Tasks to complete
--Native token rights to profit, from the treasury revenue (dividends)<br>
--Verify behaviour of undoAsset<br>
--DEX integration<br>
--Fail if asset.data empty<br>
+-Native token rights to profit, from the treasury revenue (dividends).<br>
+-Rewrite drawing module as block processing extension when available in next lisk-sdk release. Right now this code should NOT by considered production ready. Right now module causes inconsistency in database.<br>
 
 # Credits
 Corbifex | Moosty
