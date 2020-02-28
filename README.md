@@ -1,6 +1,8 @@
 # LDICE
 Provably fair dice game made with lisk-sdk
 
+* [Ldice frontend (Client app)](http://github.com/thepool-io/ldice-frontend)
+
 Full install guide fresh Ubuntu 18.04
 ```sh
 adduser ldice
