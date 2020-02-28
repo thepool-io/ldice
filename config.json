@@ -146,6 +146,10 @@
       "discoveryInterval": 30000,
       "seedPeers": [
         {
+          "ip": "159.65.53.193",
+          "wsPort": 5000
+        },
+        {
           "ip": "127.0.0.1",
           "wsPort": 5000
         }
