@@ -3,7 +3,7 @@
     "label": "ldice",
     "minVersion": "0.1.1",
     "version": "0.1.1",
-    "protocolVersion": "1.1",
+    "protocolVersion": "2.0",
     "ipc": {
       "enabled": true
     },
